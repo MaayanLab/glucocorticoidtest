@@ -1,0 +1,35 @@
+Do not use samples with NO; Use YELLOW	sample_name	condition	age	sex	batch	individual	race
+aaF1.fq.gz 	aaF1_control	control	N/A	f	batch1	Individual1	africanamerican
+aaF1_GC.fq.gz  NO	aaF1_GC	gc	N/A	f	batch1	Individual1	africanamerican
+aaF2.fq.gz 	aaF2_control	control	50	f	batch1	Individual2	africanamerican
+aaF2_GC.fq.gz  NO	aaF2_GC	gc	50	f	batch1	Individual2	africanamerican
+aaF3.fq.gz 	aaF3_control	control	48	f	batch1	Individual3	africanamerican
+aaF3_GC.fq.gz  NO	aaF3_GC	gc	48	f	batch1	Individual3	africanamerican
+aaM1.fq.gz 	aaM1_control	control	58	m	batch1	Individual6	africanamerican
+aaM1_GC.fq.gz NO	aaM1_GC	gc	58	m	batch1	Individual6	africanamerican
+aaM2.fq.gz 	aaM2_control	control	43	m	batch1	Individual7	africanamerican
+aaM2_GC.fq.gz NO	aaM2_GC	gc	43	m	batch1	Individual7	africanamerican
+aaM3.fq.gz 	aaM3_control	control	64	m	batch1	Individual8	africanamerican
+aaM3_GC.fq.gz NO	aaM3_GC	gc	64	m	batch1	Individual8	africanamerican
+HS15.fq.gz 	HS15_aaF4_control	control	55	f	batch2	Individual4	africanamerican
+HS16.fq.gz        NO	HS16_aaF4_GC	gc	55	f	batch2	Individual4	africanamerican
+HS17.fq.gz 	HS17_aaM4_control	control	55	m	batch2	Individual9	africanamerican
+HS18.fq.gz        NO	HS18_aaM4_GC	gc	55	m	batch2	Individual9	africanamerican
+HS19.fq.gz 	HS19_aaF5_control	control	53	f	batch2	Individual5	africanamerican
+HS20.fq.gz   NO	HS20_aaF5_GC	gc	53	f	batch2	Individual5	africanamerican
+HS1233_control_S10_R1_001.fastq.gz 	HS1233_control	control	28	f	batch3	individual10	caucasian
+HS1233_Gc_S11_R1_001.fastq.gz            NO	HS1233_GC	gc	28	f	batch3	individual10	caucasian
+HS1583_control_S1_R1_001.fastq.gz 	HS1583_control	control	51	m	batch3	individual12	caucasian
+HS1583_Gc_S2_R1_001.fastq.gz              NO	HS1583_GC	gc	51	m	batch3	individual12	caucasian
+HS1609_control_S12_R1_001.fastq.gz 	HS1609_control	control	47	f	batch3	individual13	caucasian
+HS1609_GC_S13_R1_001.fastq.gz            NO	HS1609_GC	gc	47	f	batch3	individual13	caucasian
+HS1625_control_S3_R1_001.fastq.gz 	HS1625_control	control	38	m	batch3	individual14	caucasian
+HS1625_Gc_S4_R1_001.fastq.gz              NO 	HS1625_GC	gc	38	m	batch3	individual14	caucasian
+HS1659_control_S14_R1_001.fastq.gz 	HS1659_control	control	24	f	batch3	individual15	caucasian
+HS1659_GC_S15_R1_001.fastq.gz           NO	HS1659_GC	gc	24	f	batch3	individual15	caucasian
+HS1660_control_S16_R1_001.fastq.gz 	HS1660_control	control	33	f	batch3	individual16	caucasian
+HS1660_GC_S17_R1_001.fastq.gz           NO	HS1660_GC	gc	33	f	batch3	individual16	caucasian
+HS2100_control_S18_R1_001.fastq.gz 	HS2100_control	control	38	f	batch3	individual17	caucasian
+HS2100_GC_S19_R1_001.fastq.gz           NO	HS2100_GC	gc	38	f	batch3	individual17	caucasian
+HS2191_GC_S8_R1_001.fastq.gz             NO	HS2191_GC	gc	47	m	batch3	individual18	caucasian
+HS2191_control_S7_R1_001.fastq.gz	HS2191_control	control	47	m	batch3	individual18	caucasian
