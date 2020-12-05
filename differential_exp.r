@@ -3,6 +3,7 @@ library("voom")
 library("edgeR")
 library("preprocessCore")
 library("Rtsne")
+library("EnhancedVolcano")
 
 setwd("C:/Users/Rubberchicken/Documents/GitHub/glucocorticoidtest")
 
@@ -106,6 +107,49 @@ write.table(top, file="limma_unmatched_gc.tsv", sep="\t", quote=F)
 
 top = topTable(fit, n=Inf, sort.by="none")
 
-# somewhat correlated with matched t-test
+# somewhat correlated with paired t-test
 print(cor(-tts, top[,2]))
+pdf("plots/ttest_limma.pdf")
+plot(-tts, top[,2], pch=".", xlab="t-test (paired)", ylab="limma")
+dev.off()
 
+
+#ethnic differences
+ww = which(info[,2] == "control")
+meanw = which(rowMeans(normalize.quantiles(counts[,ww])) > 10)
+design <- model.matrix(~fethnicity[ww])
+
+# remove genes that have too low expression
+ff = filterByExpr(counts[,ww], design=design)
+
+pdf("plots/limma_ethnic.pdf")
+
+dge <- DGEList(counts=counts[ff,ww])
+dge <- calcNormFactors(dge)
+
+v <- voom(dge, design, plot=TRUE)
+
+fit <- lmFit(v, design)
+fit <- eBayes(fit)
+
+top = topTable(fit, n=Inf)
+dev.off()
+
+ws = which(top[,6] < 0.05)
+length(ws)
+
+print(top[1:30,])
+write.table(top, file="limma_ethnic_unmatched_gc.tsv", sep="\t", quote=F)
+
+pdf("plots/volcano_ethnic.pdf")
+EnhancedVolcano(top,
+    lab = top[,1],
+    x = 'logFC',
+    y = 'FDR',
+    ylab = 'log FDR',
+    widthConnectors = 0.75,
+    title = "ethnicity AA vs C",
+    pCutoff = 0.05,
+    ylim=c(0,13)
+    )
+dev.off()
