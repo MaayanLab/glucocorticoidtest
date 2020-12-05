@@ -145,11 +145,85 @@ pdf("plots/volcano_ethnic.pdf")
 EnhancedVolcano(top,
     lab = top[,1],
     x = 'logFC',
-    y = 'FDR',
+    y = 'adj.P.Val',
     ylab = 'log FDR',
     widthConnectors = 0.75,
     title = "ethnicity AA vs C",
-    pCutoff = 0.05,
+    FCcutoff = 1.0,
+    pCutoff = 0.1,
     ylim=c(0,13)
     )
 dev.off()
+
+pdf("plots/volcano_ethnic_2.pdf")
+EnhancedVolcano(top[-c(1,2,3),],
+    lab = top[-c(1,2,3),1],
+    x = 'logFC',
+    y = 'adj.P.Val',
+    ylab = 'log FDR',
+    widthConnectors = 0.75,
+    title = "ethnicity AA vs C",
+    FCcutoff = 1.0,
+    pCutoff = 0.1,
+    ylim=c(0,4)
+    )
+dev.off()
+
+ww_down = which(top[,2] < 0 & top[,6] < 0.1)
+ww_up = which(top[,2] > 0 & top[,6] < 0.1)
+
+print(length(ww_down))
+print(length(unique(top[ww_down, 1])))
+print(length(ww_up))
+
+
+
+#advanced ethnic differences (use other cofactors in design matrix)
+ww = which(info[,2] == "control")
+meanw = which(rowMeans(normalize.quantiles(counts[,ww])) > 10)
+
+ethnicity = fethnicity[ww]
+age = as.numeric(info[ww,3])
+age[1] = 46 # that average age since missing
+batch = fbatch[ww]
+gender = fgender[ww]
+
+design <- model.matrix(~ethnicity)
+
+# remove genes that have too low expression
+ff = filterByExpr(counts[,ww], design=design)
+
+pdf("plots/limma_ethnic_correction.pdf")
+dge <- DGEList(counts=counts[ff,ww])
+dge <- calcNormFactors(dge)
+v <- voom(dge, design, plot=TRUE)
+v_correct<-removeBatchEffect(v, batch=(gender), covariates=(age))
+fit <- lmFit(v_correct, design)
+fit <- eBayes(fit)
+top = topTable(fit, n=Inf)
+dev.off()
+
+ws = which(top[,6] < 0.1)
+length(ws)
+
+write.table(top, file="limma_ethnic_unmatched_gc_cofactor_correction.tsv", sep="\t", quote=F)
+
+pdf("plots/volcano_ethnic.pdf")
+EnhancedVolcano(top,
+    lab = top[,1],
+    x = 'logFC',
+    y = 'adj.P.Val',
+    ylab = 'log FDR',
+    widthConnectors = 0.75,
+    title = "ethnicity AA vs C",
+    FCcutoff = 1.0,
+    pCutoff = 0.1,
+    ylim=c(0,13)
+    )
+dev.off()
+
+ww_down = which(top[,2] < 0 & top[,6] < 0.1)
+ww_up = which(top[,2] > 0 & top[,6] < 0.1)
+
+print(length(ww_down))
+print(length(ww_up))
