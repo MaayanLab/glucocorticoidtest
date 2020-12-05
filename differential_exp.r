@@ -42,8 +42,11 @@ pcc = rep(20,24)
 pcc[which(info[,2] == "gc")] = 17
 
 pp = prcomp(t(qexp))
+
+pdf("plots/pca_plot.pdf")
 plot(pp$x[,1], pp$x[,2], col=colo, pch=pcc, xlab="PC1", ylab="PC2", cex=1.3)
 legend("topleft", legend=c("Batch 1", "Batch 2", "Batch 3", "control", "GC"), col=c(1,2,3,1,1), pch=c(20,20,20,20,17))
+dev.off()
 
 # since the samples are matched there is a lot more power in a matched analysis
 
@@ -70,10 +73,9 @@ ww2 = which(tts < 0 & apv < 0.1)
 
 oo = rev(order(tts))
 
-genes[oo][1:10]
-genes[rev(oo)][1:10]
+print(genes[oo][1:10])
+print(genes[rev(oo)][1:10])
 
-plot(tts[oo])
 
 # the results point to very similar results
 
@@ -86,6 +88,8 @@ findividual = as.factor(info[,6])
 # this model is not matched by subject. This is possible somehow too and will make the results better
 design <- model.matrix(~ftreatment)
 
+pdf("plots/limma.pdf")
+
 dge <- DGEList(counts=counts)
 dge <- calcNormFactors(dge)
 
@@ -96,5 +100,12 @@ fit <- eBayes(fit)
 
 top = topTable(fit, n=Inf)
 
-write.table(top, file="limma_unmatched_gc.tsv", sep="\t", quotes=F)
+dev.off()
+
+write.table(top, file="limma_unmatched_gc.tsv", sep="\t", quote=F)
+
+top = topTable(fit, n=Inf, sort.by="none")
+
+# somewhat correlated with matched t-test
+print(cor(-tts, top[,2]))
 
