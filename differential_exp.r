@@ -197,6 +197,8 @@ pdf("plots/limma_ethnic_correction.pdf")
 dge <- DGEList(counts=counts[ff,ww])
 dge <- calcNormFactors(dge)
 v <- voom(dge, design, plot=TRUE)
+
+#remove cofactors gender and age
 v_correct<-removeBatchEffect(v, batch=(gender), covariates=(age))
 fit <- lmFit(v_correct, design)
 fit <- eBayes(fit)
@@ -208,7 +210,7 @@ length(ws)
 
 write.table(top, file="limma_ethnic_unmatched_gc_cofactor_correction.tsv", sep="\t", quote=F)
 
-pdf("plots/volcano_ethnic.pdf")
+pdf("plots/volcano_ethnic_cofactor_correction.pdf")
 EnhancedVolcano(top,
     lab = top[,1],
     x = 'logFC',
@@ -218,7 +220,7 @@ EnhancedVolcano(top,
     title = "ethnicity AA vs C",
     FCcutoff = 1.0,
     pCutoff = 0.1,
-    ylim=c(0,13)
+    ylim=c(0,1)
     )
 dev.off()
 
@@ -227,3 +229,4 @@ ww_up = which(top[,2] > 0 & top[,6] < 0.1)
 
 print(length(ww_down))
 print(length(ww_up))
+
